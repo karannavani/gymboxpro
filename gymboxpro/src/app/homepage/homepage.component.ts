@@ -991,6 +991,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   createLocationOptions() {
+    const locations: string[] = [];
     // const dates = Object.keys(this.allClasses);
     // console.log(dates);
 
@@ -1001,11 +1002,15 @@ export class HomepageComponent implements OnInit, OnDestroy {
     // MOCK IMPLEMENTATION
 
     const dates = Object.keys(this.mockData);
-    console.log('dates');
 
     dates.forEach(date => {
-      console.log(this.mockData[date]);
+      // console.log(this.mockData[date]);
+      this.mockData[date].forEach(gymClass => {
+        locations.push(gymClass.location);
+      });
     });
+
+    console.log('unique locations', [...new Set(locations)]);
   }
 
   ngOnDestroy(): void {
