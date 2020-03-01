@@ -1,1 +1,11 @@
-<p>homepage works!</p>
+<h4>Basic mat-select</h4>
+<form [formGroup]="bookingForm">
+  <mat-form-field>
+    <mat-label>Favorite location</mat-label>
+    <mat-select *ngIf="locations.length > 0" formControlName="gymSelection">
+      <mat-option *ngFor="let location of locations" [value]="location">
+        {{ location }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiService } from '../api.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 // import { distinct, map, tap, first, mergeMap, last } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -15,8 +15,8 @@ export class HomepageComponent implements OnInit, OnDestroy {
   email = 'xxxx';
   password = 'xxxx';
   allClasses: object;
-
-  gymSelection = new FormControl('');
+  locations: string[] = [];
+  bookingForm: FormGroup;
 
   mockData = {
     '2020-02-16': [
@@ -975,7 +975,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
     ]
   };
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     // this.subscriptions.add(
@@ -988,10 +988,15 @@ export class HomepageComponent implements OnInit, OnDestroy {
     // );
 
     this.createLocationOptions();
+    this.bookingForm = this.formBuilder.group({
+      gymSelection: [this.locations.length > 0 ? this.locations[0] : '', Validators.required]
+    });
+    console.log('locations are', this.locations);
+
+    this.apiService.getAllClasses(this.email, this.password);
   }
 
   createLocationOptions() {
-    const locations: string[] = [];
     // const dates = Object.keys(this.allClasses);
     // console.log(dates);
 
@@ -1006,11 +1011,11 @@ export class HomepageComponent implements OnInit, OnDestroy {
     dates.forEach(date => {
       // console.log(this.mockData[date]);
       this.mockData[date].forEach(gymClass => {
-        locations.push(gymClass.location);
+        this.locations.push(gymClass.location);
       });
     });
 
-    console.log('unique locations', [...new Set(locations)]);
+    return (this.locations = [...new Set(this.locations)]);
   }
 
   ngOnDestroy(): void {
