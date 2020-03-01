@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   // Your web app's Firebase configuration
   firebaseConfig: {
-    apiKey: '',
+    apiKey: 'AIzaSyDoHaArVGySH_zjKRFAowacNZ2fZflB8Kw',
     authDomain: 'gymbox-pro.firebaseapp.com',
     databaseURL: 'https://gymbox-pro.firebaseio.com',
     projectId: 'gymbox-pro',
